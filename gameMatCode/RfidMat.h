@@ -3,9 +3,9 @@
 #include <MFRC522.h>
 
 #define SS_PINF 35
-#define SS_PINB 32
-#define SS_PINL 33
-#define SS_PINR 25
+#define SS_PINB 0
+#define SS_PINL 25
+#define SS_PINR 27
 
 #define RST_PIN 9
 #define MOSI_PIN 23
@@ -19,7 +19,7 @@ MFRC522 rfidB(SS_PINB, RST_PIN); // Create MFRC522 instance.
 MFRC522 rfidL(SS_PINL, RST_PIN); // Create MFRC522 instance.
 MFRC522 rfidR(SS_PINR, RST_PIN); // Create MFRC522 instance.
 
-int total_RFID = 4;
+uint8_t total_RFID = 4;
 
 bool RFIDsearch(MFRC522 rfid)
 {

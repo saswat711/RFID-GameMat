@@ -1,33 +1,38 @@
 #include "RfidMat.h"
 
 #include <Arduino.h>
-#include <Gamepad.h>
 
-Gamepad bleGamepad;
+#include <BleKeyboard.h>
+
+BleKeyboard bleGamepad;
 // dEFINING BUTTON NO
 // for Buttons
-#define btnA BUTTON_1
-#define btnB BUTTON_2
-#define btnX BUTTON_3
-#define btnY BUTTON_4
-#define btnFwdLft BUTTON_5
-#define btnFwdRgt BUTTON_6
-#define btnCenter BUTTON_14
-#define btnBckLft BUTTON_15
-#define btnBckRgt BUTTON_16
+#define btnFwdLft 1
+#define btnFwd 2
+#define btnFwdRgt 3
+#define btnLft 4
+#define btnCenter 5
+#define btnRgt 6
+#define btnBckLft 7
+#define btnBck 8
+#define btnBckRgt 9
 
 
 
 // for Buttons
 bool fwdA = 0;
-bool  lftB = 0;
+bool lftB = 0;
 bool bckX = 0;
-bool  rgtY = 0;
-bool  fwdLft = 0;
-bool  fwdRgt = 0;
-bool  cntr = 0;
-bool  bckLft = 0;
+bool rgtY = 0;
+bool fwdLft = 0;
+bool fwdRgt = 0;
+bool cntr = 0;
+bool bckLft = 0;
 bool bckRgt = 0;
+
+// Keypad
+
+
 
 void setup(){
    Serial.begin(9600);
@@ -65,30 +70,30 @@ void readBtn(){
 
 void updateBtn(){
   if(fwdA){
-    bleGamepad.press(btnA);
+    bleGamepad.write(btnFwd);
   }
   else{
-    bleGamepad.release(btnA);
+    bleGamepad.release(btnFwd);
   }
     // For B button
   if(lftB){
-        bleGamepad.press(btnB);
+        bleGamepad.write(btnLft);
   }
   else{
-      bleGamepad.release(btnB);
+      bleGamepad.release(btnLft);
   }
     // For X button
   if(bckX){
-        bleGamepad.press(btnX);
+        bleGamepad.write(btnBck);
   }
   else{
-      bleGamepad.release(btnX);
+      bleGamepad.release(btnBck);
   }
     // For Y button
   if(rgtY){
-        bleGamepad.press(btnY);
+        bleGamepad.write(btnRgt);
   }
   else{
-      bleGamepad.release(btnY);
+      bleGamepad.release(btnRgt);
   }
 }
