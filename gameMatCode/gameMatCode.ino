@@ -18,7 +18,6 @@ BleKeyboard bleGamepad;
 #define btnBckRgt 9
 
 
-
 // for Buttons
 bool fwdA = 0;
 bool lftB = 0;
@@ -35,7 +34,8 @@ bool bckRgt = 0;
 
 
 void setup(){
-   Serial.begin(9600);
+   Serial.begin(115200);
+   
    initialize();
       // The default bleGamepad.begin() above enables 16 buttons, all axes, one hat, start and select and no simulation controls
         bleGamepad.begin();
@@ -49,7 +49,8 @@ void loop(){
     {
         Serial.println("Ble is connected");
         readBtn();
-        delay(500);
+        updateBtn();
+        delay(1000);
     }
    else
     {
@@ -68,6 +69,12 @@ void readBtn(){
   Serial.println((String)"A, B, X, Y: "+fwdA+" "+lftB+" "+bckX+" "+rgtY);
 }
 
+// void rstBool(){
+//   fwdA = 0;
+//   lftB = 0;
+//   bckX = 0;
+//   rgtY = 0;
+// }
 void updateBtn(){
   if(fwdA){
     bleGamepad.write(btnFwd);
@@ -96,4 +103,5 @@ void updateBtn(){
   else{
       bleGamepad.release(btnRgt);
   }
+  rstBool();
 }
