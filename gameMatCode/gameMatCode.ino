@@ -23,23 +23,20 @@ bool fwdA = 0;
 bool lftB = 0;
 bool bckX = 0;
 bool rgtY = 0;
-bool fwdLft = 0;
-bool fwdRgt = 0;
-bool cntr = 0;
-bool bckLft = 0;
-bool bckRgt = 0;
-
-// Keypad
-
+bool fwdL = 0;
+bool fwdR = 0;
+bool center = 0;
+bool bckL = 0;
+bool bckR = 0;
 
 
 void setup(){
-   Serial.begin(115200);
+   Serial.begin(19200);
    
    initialize();
       // The default bleGamepad.begin() above enables 16 buttons, all axes, one hat, start and select and no simulation controls
-        bleGamepad.begin();
-           Serial.println("Starting BLE work!");
+   bleGamepad.begin();
+   Serial.println("Starting BLE work!");
 }
 
 void loop(){
@@ -50,58 +47,61 @@ void loop(){
         Serial.println("Ble is connected");
         readBtn();
         updateBtn();
-        delay(1000);
+        delay(500);
     }
    else
     {
         Serial.println("Ble is not connected!"); 
-                delay(500);
+        delay(500);
     }
 }
 
 
 void readBtn(){
-    fwdA =  forForward();
+    fwdA = forForward();
     lftB = forBackward();
     bckX = forLeftward();
     rgtY = forRightward();
+    center = forCenter();
+    fwdL = forFwdLft();
+    fwdR = forFwdRgt();
+    bckL = forBckLft();
+    bckR = forBckRgt();
   // To print serial values
-  Serial.println((String)"A, B, X, Y: "+fwdA+" "+lftB+" "+bckX+" "+rgtY);
+  Serial.println((String)"1, 2, 3, 4, 5, 6, 7, 8, 9 : "+fwdL+" "+fwdA+" "+fwdR+" "+lftB+" "+center+" "+rgtY+" "+bckL+" "+bckX+" "+bckR);
 }
 
-// void rstBool(){
-//   fwdA = 0;
-//   lftB = 0;
-//   bckX = 0;
-//   rgtY = 0;
-// }
 void updateBtn(){
   if(fwdA){
     bleGamepad.write(btnFwd);
-  }
-  else{
-    bleGamepad.release(btnFwd);
   }
     // For B button
   if(lftB){
         bleGamepad.write(btnLft);
   }
-  else{
-      bleGamepad.release(btnLft);
-  }
     // For X button
   if(bckX){
         bleGamepad.write(btnBck);
-  }
-  else{
-      bleGamepad.release(btnBck);
   }
     // For Y button
   if(rgtY){
         bleGamepad.write(btnRgt);
   }
-  else{
-      bleGamepad.release(btnRgt);
+  if(center){
+   bleGamepad.write(btnCenter);
   }
+  if(fwdL){
+   bleGamepad.write(btnFwdLft);
+  }
+  if(fwdR){
+   bleGamepad.write(btnFwdRgt);
+  }
+  if(bckL){
+   bleGamepad.write(btnBckLft);
+  }
+  if(bckR){
+   bleGamepad.write(btnBckRgt);
+  }
+  bleGamepad.releaseAll();
   rstBool();
 }
